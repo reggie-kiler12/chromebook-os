@@ -19,8 +19,18 @@ jobs:
       - name: Build Chromebook OS
         run: ./build.sh
 
+      - name: Check build output
+        run: |
+          echo "=== BUILD DIRECTORY ==="
+          ls -lah build/
+          echo "=== ROOTFS ARCHIVE ==="
+          ls -lh build/chromebook-os-arm64-rootfs.tar.gz
+          echo "=== ARCHIVE SIZE ==="
+          du -h build/chromebook-os-arm64-rootfs.tar.gz
+
       - name: Upload build
         uses: actions/upload-artifact@v4
         with:
           name: chromebook-os-build
-          path: build/
+          path: build/chromebook-os-arm64-rootfs.tar.gz
+          if-no-files-found: error
