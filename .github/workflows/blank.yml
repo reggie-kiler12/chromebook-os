@@ -1,0 +1,26 @@
+name: Chromebook OS Build
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Download project
+        uses: actions/checkout@v4
+
+      - name: Make build script executable
+        run: chmod +x build.sh
+
+      - name: Build Chromebook OS
+        run: ./build.sh
+
+      - name: Upload build
+        uses: actions/upload-artifact@v4
+        with:
+          name: chromebook-os-build
+          path: build/
